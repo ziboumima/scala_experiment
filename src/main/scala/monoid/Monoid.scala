@@ -62,6 +62,13 @@ object Toto {
     as.map(f).fold(m.zero)(m.op)
   }
 
+  // Exercice 10.07
+  def foldMap[A, B](v: IndexedSeq[A], m: Monoid[B])(f: A => B): B = {
+
+    ???
+  }
+
+
 
 
 }
