@@ -75,9 +75,9 @@ object Toto {
     }
   }
 
-
-
-
-
+  def testFoldMap() = {
+    val result = foldMap(Vector(1, 2, 3, 4), stringMonoid)(_.toString)
+    println(result)
+  }
 
 }
