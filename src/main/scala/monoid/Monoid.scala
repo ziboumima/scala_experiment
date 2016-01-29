@@ -64,9 +64,18 @@ object Toto {
 
   // Exercice 10.07
   def foldMap[A, B](v: IndexedSeq[A], m: Monoid[B])(f: A => B): B = {
-
-    ???
+    val size = v.length
+    size match {
+      case 0 => m.zero
+      case 1 => f(v.head)
+      case s => {
+        val (first, second) = v.splitAt(size / 2)
+        m.op(foldMap(first, m)(f), foldMap(second, m)(f))
+      }
+    }
   }
+
+
 
 
 
