@@ -1,5 +1,7 @@
 package parallelism
 
+import com.sun.org.apache.bcel.internal.generic.LSTORE
+
 /**
   * Created by hibou on 30/01/16.
   */
@@ -35,3 +37,4 @@ object Parallel {
     }
   }
 }
+

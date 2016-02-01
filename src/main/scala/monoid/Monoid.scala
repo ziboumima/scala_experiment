@@ -80,4 +80,15 @@ object Toto {
     println(result)
   }
 
+  sealed trait WC
+  case class Stub(chars: String) extends WC
+  case class Part(lStub: String, words: Int, rStub: String) extends WC
+  val wcMonoid: Monoid[WC] = new Monoid[WC]{
+    def op(a1: WC, a2: WC) = {
+      case
+    }
+  }
+
+
+
 }
