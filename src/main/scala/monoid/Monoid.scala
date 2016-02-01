@@ -100,7 +100,6 @@ object Toto {
   // Exercice 10.11
   def count(a: String): Int = {
 
-
     ???
   }
 }
