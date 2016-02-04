@@ -95,7 +95,6 @@ object OptionFoldable extends Foldable[Option] {
   }
 }
 
-
 object ComposingMonoids {
   def productMonoid[A, B](A: Monoid[A], B: Monoid[B]): Monoid[(A, B)] = {
     new Monoid[(A, B)] {
@@ -103,5 +102,35 @@ object ComposingMonoids {
       val zero = (A.zero, B.zero)
     }
   }
+
+  def mapMergeMonoid[K, V](v: Monoid[V]): Monoid[Map[K, V]] = {
+    new Monoid[Map[K, V]] {
+      override def op(a1: Map[K, V], a2: Map[K, V]): Map[K, V] = {
+        (a1.keySet ++ a2.keySet).foldLeft(zero){(acc, k) =>
+            acc.updated(k, v.op(a1.getOrElse(k, v.zero), a2.getOrElse(k, v.zero)))
+        }
+      }
+      override def zero: Map[K, V] = Map.empty
+    }
+  }
+
+  // Exercice 10.17
+  def functionMonoid[A, B](b: Monoid[B]): Monoid[A => B] = {
+    new Monoid[A => B] {
+      override def op(a1: (A) => B, a2: (A) => B): (A) => B = {
+        def result(x: A): B = {
+          val x1 = a1(x)
+          val x2 = a2(x)
+          b.op(x1, x2)
+        }
+        result
+      }
+
+      override def zero: (A) => B = {
+        x => b.zero
+      }
+    }
+  }
+
 }
 
