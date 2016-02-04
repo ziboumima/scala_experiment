@@ -1,6 +1,7 @@
 package foldable
 import scala.language.higherKinds
 import monoid.Monoid
+import monoid.Toto
 
 /**
   * Created by hibou on 02/02/16.
@@ -132,5 +133,10 @@ object ComposingMonoids {
     }
   }
 
+  // Exercice 10.18
+  def bag[A](as: IndexedSeq[A]): Map[A, Int] = {
+    val m: Monoid[Map[A, Int]] = mapMergeMonoid(Toto.intAddition)
+    IndexedSeqFoldable.foldMap(as)(x => Map[A, Int](x -> 1))(m)
+  }
 }
 
