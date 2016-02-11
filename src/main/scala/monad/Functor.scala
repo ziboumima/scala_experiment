@@ -40,13 +40,42 @@ trait Monad[F[_]] extends Functor[F] {
   def replicateM[A](n: Int, ma: F[A]): F[List[A]] = {
     map(ma)(List.fill(n)(_))
   }
+  // Exercice 11.7
+
+  def compose[A,B,C](f: A => F[B], g: B => F[C]): A => F[C] = {
+    a => flatMap(f(a))(g)
+  }
+
+  // Exercice 11.12: implement join in terme of flatMap
+  def join[A](mma: F[F[A]]): F[A] = flatMap(mma)(ma => ma)
+
+  // Exercice 11.13: Flatmap in terms of join and map
+  def flatMap2[A, B](fa: F[A])(f: A => F[B]): F[B] = {
+    join(map(fa)(f))
+  }
+
+  def compose2[A,B,C](f: A => F[B], g: B => F[C]): A => F[C] = {
+    a => join(map(f(a))(g))
+  }
 
 }
 
+
+// Exercice 11.17
+
+case class Id[A](value: A){
+  def map[B](f: A => B): Id[B] = Id(f(value))
+  def flatMap[B](f: A => Id[B]): Id[B] = f(value)
+}
+
+object MonadId extends Monad[Id] {
+  override def unit[A](a: => A): Id[A] = Id(a)
+
+  override def flatMap[A, B](fa: Id[A])(f: (A) => Id[B]): Id[B] = fa.flatMap(f)
+}
 
 object Monad {
   val listFunctor = new Functor[List] {
     def map[A, B](as: List[A])(f: A => B): List[B] = as map f
   }
-
 }
