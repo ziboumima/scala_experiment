@@ -1,5 +1,5 @@
 package monad
-
+import  scala.language.higherKinds
 /**
   * Created by hibou on 08/02/16.
   */
@@ -73,6 +73,28 @@ object MonadId extends Monad[Id] {
 
   override def flatMap[A, B](fa: Id[A])(f: (A) => Id[B]): Id[B] = fa.flatMap(f)
 }
+
+case class State[S, A](run: S => (A, S)) {
+  def map[B](f: A => B): State[S, B] =
+  State(s => {
+    val (a, s1) = run(s)
+    (f(a), s1)
+  })
+
+  def flatMap[B](f: A => State[S, B]): State[S, B] =
+  State(s => {
+    val (a, s1) = run(s)
+    f(a).run(s1)
+  })
+}
+
+//
+//object IntStateMonad extends Monad[({type IntState[A] = State[Int, A]})#IntState] {
+//  override def unit[A](a: => A): IntState[A] = State(s => (a, s))
+//
+//  override def flatMap[A, B](fa: IntState[A])(f: (A) => IntState[B]): IntState[B] = fa.flatMap(f)
+//}
+
 
 object Monad {
   val listFunctor = new Functor[List] {
