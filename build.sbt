@@ -10,3 +10,5 @@ scalacOptions ++= Seq(
   "-feature",
   "-language:implicitConversions"
 )
+
+libraryDependencies += "org.apache.spark" %% "spark-core" % "1.6.0"
