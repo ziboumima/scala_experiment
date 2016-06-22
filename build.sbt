@@ -12,6 +12,7 @@ libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.1"
 
 libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.0"
 
+libraryDependencies += "com.github.tototoshi" %% "scala-csv" % "1.3.1"
 
 scalacOptions ++= Seq(
   "-feature",
