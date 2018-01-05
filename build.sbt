@@ -10,9 +10,13 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.7" % "test"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.1"
 
-libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.0"
+libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.1.3"
 
 libraryDependencies += "com.github.tototoshi" %% "scala-csv" % "1.3.1"
+
+libraryDependencies += "io.argonaut" %% "argonaut-scalaz" % "6.2"
+
+
 
 scalacOptions ++= Seq(
   "-feature",
